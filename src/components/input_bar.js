@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 
-const TaskList = (props) => {
-  const tasks = props.list
-  const ListItems = tasks.map((task) =>
-    <li key={tasks.indexOf(task)}> {task} </li>
-  )
-  return (
-    ListItems
-  )
-}
+import TaskList from './task_list';
 
 class Inputbar extends Component {
   constructor(props) {
@@ -19,30 +11,37 @@ class Inputbar extends Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
   handleSubmit(e) {
     e.preventDefault()
-    console.log('pre add',this.state.todoList)
     let newtodoList = [...this.state.todoList,this.state.inputText]
-    console.log('newtodoList', newtodoList)
     this.setState({
       inputText: '',
       todoList: newtodoList
     })
-    console.log('post add',this.state.todoList)
   }
   handleChange(e) {
     this.setState({
       inputText: e.target.value
     })
   }
-
+  handleDelete(e) {
+    const deleteIndex = e.target.id
+    let newtodoList = this.state.todoList.slice(0)
+    newtodoList.splice(deleteIndex, 1)
+    this.setState({
+      todoList: newtodoList
+    })
+  }
   render() {
     return (
       <div>
-        <ul> <TaskList list={this.state.todoList}/> </ul>
+        <ul>
+          <TaskList list={this.state.todoList} handleDelete={this.handleDelete}/>
+        </ul>
         <form onSubmit={this.handleSubmit}>
-          <input value={this.state.inputText} onChange={this.handleChange} placeholder='Do my homework.' />
+          <input value={this.state.inputText} onChange={this.handleChange} placeholder='Do your homework.' />
           <button />
         </form>
       </div>
