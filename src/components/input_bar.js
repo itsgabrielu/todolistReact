@@ -98,7 +98,7 @@ class Inputbar extends Component {
           <input value={this.state.inputText} onChange={this.handleChange} placeholder='Do your homework.' />
           <button />
         </form>
-        <ul>
+        <ol>
           <TaskList
             list={this.renderItems(this.state.status)}
             handleDelete={this.handleDelete}
@@ -107,7 +107,7 @@ class Inputbar extends Component {
             showPending={this.showPending}
             showAll={this.showAll}
           />
-        </ul>
+        </ol>
       </div>
     )
   }
