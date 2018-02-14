@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import TaskList from './task_list';
 
+let selectedValue = ''
+
 class Inputbar extends Component {
   constructor(props) {
     super(props);
@@ -32,18 +34,26 @@ class Inputbar extends Component {
     });
   }
   handleDelete(e) {
-    const deleteIndex = e.target.id;
+    selectedValue = e.target.value;
     let newAll = this.state.All.slice(0);
-    newAll.splice(deleteIndex, 1);
+    let selectedIndex = newAll.findIndex(this.findvalue);
+
+    newAll.splice(selectedIndex, 1);
+
     this.setState({
       All: newAll
     });
   }
+  findvalue(e) {
+    return e.item === selectedValue
+  }
   handleCheck(e) {
-    let toggleIndex = e.target.id;
-    console.log(e.target)
+    selectedValue = e.target.value;
     let newAll = this.state.All.slice(0);
-    newAll[toggleIndex].status = !newAll[toggleIndex].status;
+    let selectedIndex = newAll.findIndex(this.findvalue);
+
+    newAll[selectedIndex].status = !newAll[selectedIndex].status;
+
     this.setState({
       All: newAll
     });
@@ -76,7 +86,8 @@ class Inputbar extends Component {
           return this.state.All.filter(
             (el) => (!el.status)
           )
-      default: 'all'
+      default:
+        return this.state.All
     }
   }
 
@@ -86,7 +97,7 @@ class Inputbar extends Component {
         <form onSubmit={this.handleSubmit}>
           <input value={this.state.inputText} onChange={this.handleChange} placeholder='Do your homework.' />
           <button />
-        </form> 
+        </form>
         <ul>
           <TaskList
             list={this.renderItems(this.state.status)}
