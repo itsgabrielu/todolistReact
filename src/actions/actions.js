@@ -9,19 +9,19 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 // action creators
-export const addToDo = text => {
+export const addTodo = text => {
   return {
     type: ADD_TODO,
     text
   }
 }
-export const toggleToDo = index => {
+export const toggleTodo = index => {
   return {
     type: TOGGLE_TODO,
     index
   }
 }
-export const setVisbilityFilter = filter => {
+export const setVisibilityFilter = filter => {
   return {
     type: SET_VISIBILITY_FILTER,
     filter
