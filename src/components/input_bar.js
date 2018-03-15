@@ -1,10 +1,38 @@
 import React, { Component } from 'react';
 
-import TaskList from './task_list';
+import VisibleTaskList from '../containers/containerLink';
+import {addTodo} from '../actions/index';
+import { connect } from 'react-redux'
+
+const Inputbar = ({ dispatch }) => {
+  let input
+
+  return (
+    <div>
+      <h1> My Todo </h1>
+      <form onSubmit={
+        e => {
+          e.preventDefault()
+          console.log(input.value.trim())
+          if (input.value.trim()) {
+            dispatch(addTodo(input.value.trim()))
+          }
+          else return
+          input.value = ''
+        }}>
+        <input ref={e => input = e} placeholder='Do your homework.' />
+        <button />
+      </form>
+      <ol>
+        <VisibleTaskList />
+      </ol>
+    </div>
+  )
+}
 
 let selectedValue = ''
 
-class Inputbar extends Component {
+class Iputbar extends Component {
   constructor(props) {
     super(props);
     this.state={
@@ -94,23 +122,16 @@ class Inputbar extends Component {
   render() {
     return (
       <div>
+        <h1> My Todo </h1>
         <form onSubmit={this.handleSubmit}>
           <input value={this.state.inputText} onChange={this.handleChange} placeholder='Do your homework.' />
           <button />
         </form>
         <ol>
-          <TaskList
-            list={this.renderItems(this.state.status)}
-            handleDelete={this.handleDelete}
-            handleCheck={this.handleCheck}
-            showComplete={this.showComplete}
-            showPending={this.showPending}
-            showAll={this.showAll}
-          />
         </ol>
       </div>
     )
   }
 };
 
-export default Inputbar;
+export default connect()(Inputbar);

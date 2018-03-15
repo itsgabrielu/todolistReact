@@ -1,7 +1,30 @@
 import React from 'react';
 import '../main.css';
 
-const TaskList = (props) => {
+const TaskList = ({todos, toggleTodo, deleteTodo}) => {
+  console.log('these are todos', todos)
+
+  return (
+    <div>
+      { todos.map(todo =>
+        <div onClick={() => toggleTodo(todo.id)}>
+        <li
+          key={todo.id}
+          style={ {
+            textDecoration: todo.completed ? 'line-through' : 'none'
+          }}
+        >
+        {todo.text}
+        </li>
+        <button onClick={() => deleteTodo(todo.id)}>
+          X
+        </button>
+        </div>
+      )}
+    </div>
+  )
+}
+const TaskyList = (props) => {
   const tasks = props.list
 
   const ListItems = tasks.map((task, index) =>
